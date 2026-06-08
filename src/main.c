@@ -191,6 +191,8 @@ int check_syntax(t_token *tok, char *line)
   return (0);
 }
 
+
+
 int main(int argc, char *argv[], char *envp[])
 {
   char        *line;
@@ -207,9 +209,8 @@ int main(int argc, char *argv[], char *envp[])
       exit(0);   
     tokens_list = lexer(line);
     add_history(line);
-   // print_tokens(tokens_list);
+    print_tokens(tokens_list);
 		check_syntax(tokens_list, line);
     free(line);
   }
-    
 }
