@@ -35,10 +35,12 @@ typedef struct s_env
 
 typedef struct s_cmd
 {
-    char    **argv;
-    char    *infile;
-    char    *outfile;
-    int     append;
+    char            **argv;
+    char            *infile;
+    char            *outfile;
+    int             append;
+    int             heredoc;
+    struct s_cmd    *next;
 } t_cmd;
 
 void add_list(t_token **list,t_token *token);

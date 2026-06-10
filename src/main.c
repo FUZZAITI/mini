@@ -24,34 +24,34 @@ int handle_word(t_token **tokens, char *str)
 
 int handle_redirect(t_token **tokens, char *str)
 {
-  int i;
-  char *word;
-  
-  i = 0;
-  if (str[i] == '>' && str[i + 1] == '>')
-  {
+	int i;
+	char *word;
+	
+	i = 0;
+	if (str[i] == '>' && str[i + 1] == '>')
+	{
 	word = strndup(str, (i + 2));
 	add_token(tokens, word, "APPEND");
 	return (2);
-  }
-  else if (str[i] == '<' && str[i + 1] == '<')
-  {
+	}
+	else if (str[i] == '<' && str[i + 1] == '<')
+	{
 	word = strndup(str, (i + 2));
 	add_token(tokens, word, "HEREDOC");
 	return (2);
-  }
-  else if (str[i] == '>')
-  {
+	}
+	else if (str[i] == '>')
+	{
 	word = strndup(str, (i + 1));
 	add_token(tokens, word, "REDIR_OUT");
-  }
-  else if (str[i] == '<')
-  {
+	}
+	else if (str[i] == '<')
+	{
 	word = strndup(str, (i + 1));
 	add_token(tokens, word, "REDIR_IN");
-  }
-  free(word);
-  return (i + 1);
+	}
+	free(word);
+	return (i + 1);
 }
 
 int find_quote_end(char *str, char quote)
@@ -66,17 +66,17 @@ int find_quote_end(char *str, char quote)
 
 void print_tokens(t_token *list)
 {
-  if (!list)
-  {
+	if (!list)
+	{
 	printf("Lista vazia!\n");
 	return;
-  }
-  while (list != NULL)
-  {
+	}
+	while (list != NULL)
+	{
 	printf("%s = ",list -> type);
 	printf("%s\n",list -> content );
 	list = list->next; 
-  }
+	}
 }
 
 t_token *lexer(char *input) 
@@ -107,27 +107,27 @@ t_token *lexer(char *input)
 
 void add_token(t_token **list, char *word, char *type)
 {
-  t_token *token = malloc(sizeof(t_token));
+	t_token *token = malloc(sizeof(t_token));
 
-  token -> content = strdup(word);
-  token -> type = type;
-  token -> next = NULL;
-  add_list(list, token);
+	token -> content = strdup(word);
+	token -> type = type;
+	token -> next = NULL;
+	add_list(list, token);
 }
 
 void add_list(t_token **list,t_token *token)
 {
-  t_token *last;
+	t_token *last;
 
-  if (!token) 
+	if (!token) 
 		return;
-  if (*list == NULL)
-  {
+	if (*list == NULL)
+	{
 	*list = token;
 	return;
-  }
-  last = ft_lstlast(*list);
-  last -> next = token;
+	}
+	last = ft_lstlast(*list);
+	last -> next = token;
 }
 
 t_token	*ft_lstlast(t_token *lst)
@@ -143,57 +143,57 @@ t_token	*ft_lstlast(t_token *lst)
 
 int is_redir(char *type)
 {
-  return (!strcmp(type, "REDIR_IN") || !strcmp(type, "REDIR_OUT") || !strcmp(type, "APPEND") || !strcmp(type, "HEREDOC"));
+	return (!strcmp(type, "REDIR_IN") || !strcmp(type, "REDIR_OUT") || !strcmp(type, "APPEND") || !strcmp(type, "HEREDOC"));
 }
 
 int quotes_closed(char *line)
 {
-  char quote;
-  int i;
+	char quote;
+	int i;
 
-  i = 0;
-  while (line[i])
-  {
+	i = 0;
+	while (line[i])
+	{
 	if (line[i] == '\'' || line[i] == '"')
 	{
-	  quote = line[i++];
-	  while (line[i] && line[i] != quote)
+		quote = line[i++];
+		while (line[i] && line[i] != quote)
 		i++;
-	  if (!line[i])
+		if (!line[i])
 		return (0);
 	}
 	i++;
-  }
-  return (1);
+	}
+	return (1);
 }
 
 int check_syntax(t_token *tok, char *line)
 {
-  if (!tok)
+	if (!tok)
 		return (0);
 	if (!quotes_closed(line))
-  {
+	{
 		printf("syntax error: unclosed quotes\n");
 		return (0);
-  }	
-  if (!strcmp(tok->type,"PIPE"))
+	}	
+	if (!strcmp(tok->type,"PIPE"))
 		return (printf("syntax error near '|'\n"), 0);
-  while (tok)
-  {
+	while (tok)
+	{
 	if (!strcmp(tok->type,"PIPE") && tok->next == NULL)
-	  return (printf("syntax error near '|'\n"), 0);
+		return (printf("syntax error near '|'\n"), 0);
 	if (!strcmp(tok->type,"PIPE") && tok->next && (!strcmp(tok->next->type,"PIPE")))
-	  return (printf("syntax error near '|'\n"), 0);
+		return (printf("syntax error near '|'\n"), 0);
 	if (is_redir(tok->type))
 	{
-	  if (!tok->next)
+		if (!tok->next)
 			return (printf("syntax error near newline\n"), 0);
-	  if ((strcmp(tok->next->type,"WORD")))
+		if ((strcmp(tok->next->type,"WORD")))
 			return (printf("syntax error\n"), 0);
 	}
 	tok = tok->next;
-  }
-  return (1);
+	}
+	return (1);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -216,18 +216,18 @@ void remove_quotes_tokens(t_token *lst)
 
 int len_quotes(char *line)
 {
-  int i;
-  int len;
-  
-  i = 0;
-  len = 0;
-  while (line[i])
-  {
+	int i;
+	int len;
+	
+	i = 0;
+	len = 0;
+	while (line[i])
+	{
 	 if (line[i] != '\'' && line[i] != '\"')
 		len++;
 	 i++;
-  }
-  return (len);
+	}
+	return (len);
 }
 
 char *remove_quote(char *token)
@@ -257,64 +257,102 @@ char *remove_quote(char *token)
 
 t_cmd *parse(t_token *tok)
 {
-  t_cmd *head;
-  t_cmd *cmd;
+	t_cmd *head;
+	t_cmd *cmd;
+	int 	arg_i;
 
-  head = new_cmd();
-  cmd = head;
+	i = 0;
+	head = new_cmd(count_args(tok));
+	cmd = head;
 	while (tok)
-  {
-    if (tok->type == PIPE)
-    {
-      cmd->next = new_cmd();
-      cmd = cmd->next;
-    }
-    else if (tok->type == WORD)
-    {
-            // adiciona no argv
-    }
-    else if (is_redir(tok->type))
-    {
-            // trata redirecionamento
-    }
-    tok = tok->next;
-  }
-  return (head);
+	{
+		if (tok->type == PIPE)
+		{
+			cmd->next = new_cmd(count_args(tok->next));
+			cmd = cmd->next;
+		}
+		else if (tok->type == WORD)
+			cmd->argv[arg_i++] = ft_strdup(tok->content);
+		else if (is_redir(tok->type))
+		{
+			// trata redirecionamento
+		}
+		tok = tok->next;
+	}
+	return (head);
 }
 
-void add_arg(t_cmd cmd, char *str)
+int count_args(t_token *tok)
 {
-	char **args
+	int count;
+
+	count = 0;
+	while (tok && tok->type != PIPE)
+	{
+		if (tok->type == WORD)
+			count++;
+		else if (is_redir(tok->type))
+			tok = tok->next; 
+		tok = tok->next;
+	}
+	return (count);
 }
 
-t_cmd *new_cmd(void)
+t_cmd *new_cmd(int count)
 {
-  t_cmd *cmd;
+	t_cmd *cmd;
 
-  cmd = malloc(sizeof(t_cmd));
-  cmd->argv = NULL;
+	cmd = malloc(sizeof(t_cmd));
+	cmd->argv = malloc(sizeof(char *) * (count + 1));
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
-	cmd->append = NULL;
+	cmd->append = 0;
+	cmd->heredoc = 0;
 	cmd->next = NULL;
-  return (cmd);
+	return (cmd);
 }
+/*
+void add_cmd_back(t_cmd **list,t_cmd *cmd)
+{
+	t_cmd *last;
+
+	if (!cmd) 
+		return;
+	if (*list == NULL)
+	{
+	*list = cmd;
+	return;
+	}
+	last = ft_lstlast(*list);
+	last -> next = cmd;
+}
+
+t_cmd	*cmd_lstlast(t_cmd **list,t_cmd *cmd)
+{
+	if (!list)
+		return (NULL);
+	while (list->next)
+		list = list->next;
+	return (list);
+}
+
+*/
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[], char *envp[])
 {
-  char        *line;
-  t_token     *tokens_list;
-  t_env       *env;
+	char        *line;
+	t_token     *tokens_list;
+	t_env       *env;
 
-  (void)argc;
-  (void)argv;
-  while (1)
-  {
+	(void)argc;
+	(void)argv;
+	while (1)
+	{
 		line = readline("$Mine -> ");
 		if (!line)
-	  	exit(0);   
+			exit(0);   
 		tokens_list = lexer(line);
 		add_history(line);
 		if((check_syntax(tokens_list, line)))
