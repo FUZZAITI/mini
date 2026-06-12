@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
 #include "../libft/libft.h"
 
 #define NORMAL 0
@@ -64,6 +65,11 @@ char *remove_quote(char *token);
 void handle_cmd_redirect(t_cmd *cmd, t_token *tok);
 t_cmd *new_cmd(int count);
 int count_args(t_token *tok);
+t_cmd *parse(t_token *tok);
+void print_cmds(t_cmd *cmd);
+
+void execute_cmd(t_cmd *cmd, char **env);
+void free_tokens(t_token *tokens);
 
 
 
