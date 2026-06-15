@@ -49,7 +49,9 @@ ft_substr.c\
 ft_strnstr.c\
 ft_split.c\
 ft_strtrim.c\
-ft_itoa.c
+ft_itoa.c\
+ft_strcmp.c
+
 
 
 OUTPUTS := $(FILES:.c=.o)

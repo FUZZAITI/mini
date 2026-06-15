@@ -91,13 +91,13 @@ void print_tokens(t_token *list)
 {
 	if (!list)
 	{
-	printf("Lista vazia!\n");
-	return;
+		printf("Lista vazia!\n");
+		return;
 	}
 	while (list != NULL)
 	{
-	printf("%i = ",list -> type);
-	printf("%s\n",list -> content );
-	list = list->next; 
+		printf("%i = ",list -> type);
+		printf("%s\n",list -> content );
+		list = list->next; 
 	}
 }

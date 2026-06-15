@@ -7,17 +7,15 @@ char **split_path(char **env);
 
 void execute_cmd(t_cmd *cmd, char **env)
 {
-    int i = 0;
     char **path;
     char *full_path;
-    int fd[2];
 
-    pipe(fd);
-    i = 0;
     path = split_path(env);
-    full_path = get_cmd_path(cmd,path);
-    free(path);
-    execve_cmd(cmd, env, full_path);
+    if (!(is_built_in(cmd)))
+    {
+        if (full_path = get_cmd_path(cmd,path));
+            execve_cmd(cmd, env, full_path);
+    }
 }
 
 char **split_path(char **env)
@@ -53,7 +51,7 @@ char *get_cmd_path(t_cmd *cmd, char **path)
         free(full_path);
         i++;
     }
-    printf("%s: command not found\n", cmd->argv[0]);
+    return NULL;
 }
 
 void execve_cmd(t_cmd *cmd, char **envp, char *path)
