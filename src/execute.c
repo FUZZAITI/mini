@@ -11,9 +11,9 @@ void execute_cmd(t_cmd *cmd, char **env)
     char *full_path;
 
     path = split_path(env);
-    if (!(is_built_in(cmd)))
+    if (!(is_built_in(cmd, env)))
     {
-        if (full_path = get_cmd_path(cmd,path));
+        if ((full_path = get_cmd_path(cmd,path)))
             execve_cmd(cmd, env, full_path);
     }
 }
@@ -31,7 +31,8 @@ char **split_path(char **env)
             break;
         }
         i++;
-    } 
+    }
+    return NULL; 
 }
 
 char *get_cmd_path(t_cmd *cmd, char **path)
