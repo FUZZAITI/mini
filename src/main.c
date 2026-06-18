@@ -21,7 +21,9 @@ int main(int argc, char *argv[], char *envp[])
 			remove_quotes_tokens(tokens_list);
 			cmd = parse(tokens_list);
 			free_tokens(tokens_list);
-			execute_cmd(cmd, envp);
+			print_cmds(cmd);
+			//execute(cmd, envp);
+			//execute_cmd(cmd, envp);
 		}
 		//free_tokens(tokens_list);
 		free(line);

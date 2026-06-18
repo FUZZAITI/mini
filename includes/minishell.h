@@ -70,8 +70,18 @@ void print_cmds(t_cmd *cmd);
 
 void execute_cmd(t_cmd *cmd, char **env);
 void free_tokens(t_token *tokens);
-int is_built_in(t_cmd *cmd, char **envp);
+
+
+int is_built_in(char *cmd);
+int bulit_pwd();
+void bulit_exit();
+int bulit_cd(char *cd);
+int built_echo(t_cmd *cmd);
+int built_env(char **envp);
 
 
 
+int count_cmds(t_cmd *cmd);
+void execute(t_cmd *cmd_list, char  **env);
+void execute_single(t_cmd *cmd, char **env);
 

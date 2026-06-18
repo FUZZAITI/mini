@@ -6,25 +6,23 @@ int bulit_cd(char *cd);
 int built_echo(t_cmd *cmd);
 int built_env(char **envp);
 
-int is_built_in(t_cmd *cmd, char **envp)
+int is_built_in(char *cmd)
 {   
-    char *comando;
-
-    comando = cmd->argv[0];
-    if (!ft_strcmp(comando,"echo"))
-        return (built_echo(cmd));
-    else if (!ft_strcmp(comando,"cd"))
-        return bulit_cd(cmd->argv[1]);
-    else if (!ft_strcmp(comando,"pwd"))
-        return (bulit_pwd());
-    else if (!ft_strcmp(comando,"export"))
+    
+    if (!ft_strcmp(cmd,"echo"))
         return 1;
-    else if (!ft_strcmp(comando,"unset"))
+    else if (!ft_strcmp(cmd,"cd"))
         return 1;
-    else if (!ft_strcmp(comando,"env"))
-        return (built_env(envp));
-    else if (!ft_strcmp(comando,"exit"))
-        bulit_exit();
+    else if (!ft_strcmp(cmd,"pwd"))
+        return 1;
+    else if (!ft_strcmp(cmd,"export"))
+        return 1;
+    else if (!ft_strcmp(cmd,"unset"))
+        return 1;
+    else if (!ft_strcmp(cmd,"env"))
+        return 1;
+    else if (!ft_strcmp(cmd,"exit"))
+        return 1;
     return (0);                    
 }
 

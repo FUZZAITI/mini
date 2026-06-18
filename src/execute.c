@@ -4,7 +4,7 @@ char *get_cmd_path(t_cmd *cmd, char **path);
 void execve_cmd(t_cmd *cmd, char **envp, char *path);
 char **split_path(char **env);
 
-
+/*
 void execute_cmd(t_cmd *cmd, char **env)
 {
     char **path;
@@ -69,3 +69,4 @@ void execve_cmd(t_cmd *cmd, char **envp, char *path)
     waitpid(pid, NULL, 0);
     free(path);
 }
+    */
