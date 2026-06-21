@@ -6,6 +6,9 @@
 #include <string.h>
 #include <sys/wait.h>
 #include "../libft/libft.h"
+#include <fcntl.h>
+
+extern int  g_exit_status;
 
 #define NORMAL 0
 #define S_QUOTE 1
@@ -68,7 +71,12 @@ int count_args(t_token *tok);
 t_cmd *parse(t_token *tok);
 void print_cmds(t_cmd *cmd);
 
-void execute_cmd(t_cmd *cmd, char **env);
+
+char *get_cmd_path(t_cmd *cmd, char **path);
+void execve_cmd(t_cmd *cmd, t_env *env, char *path);
+char **split_path(t_env *env);
+void execute_cmd(t_cmd *cmd, t_env *env);
+
 void free_tokens(t_token *tokens);
 
 
@@ -77,11 +85,29 @@ int bulit_pwd();
 void bulit_exit();
 int bulit_cd(char *cd);
 int built_echo(t_cmd *cmd);
-int built_env(char **envp);
+int built_env(t_env *envp);
 
 
 
 int count_cmds(t_cmd *cmd);
-void execute(t_cmd *cmd_list, char  **env);
-void execute_single(t_cmd *cmd, char **env);
+void execute(t_cmd *cmd_list, t_env *env);
+void execute_single(t_cmd *cmd, t_env *env);
+void run_builtin(t_cmd *cmd, t_env *env);
+void restore_std_fds(int saved_stdin, int saved_stdout);
+int setup_redirections(t_cmd *cmd);
 
+t_env *new_env(char *key, char *value);
+void add_env_back(t_env **env, t_env *new);
+t_env *env_init(char **envp);
+int env_size(t_env *env);
+char **env_to_array(t_env *env);
+
+
+void execute_single_child(t_cmd *cmd, t_env *env);
+pid_t launch_cmd(t_cmd *cmd, t_env *env, int prev_fd, int fd[2]);
+void execute_pipeline(t_cmd *cmd, t_env *env, int cmd_count);
+
+
+void free_env(t_env *env);
+void free_cmd(t_cmd *cmd);
+void free_arraay(char **array);

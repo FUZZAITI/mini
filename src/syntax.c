@@ -47,7 +47,7 @@ int check_syntax(t_token *tok, char *line)
 	{
 		if (!tok->next)
 			return (printf("syntax error near newline\n"), 0);
-		if (tok->type == WORD)
+		if (tok->next->type != WORD)
 			return (printf("syntax error\n"), 0);
 	}
 	tok = tok->next;

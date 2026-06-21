@@ -1,10 +1,11 @@
 #include "minishell.h"
 
+int is_built_in(char *cmd);
 int bulit_pwd();
 void bulit_exit();
 int bulit_cd(char *cd);
 int built_echo(t_cmd *cmd);
-int built_env(char **envp);
+int built_env(t_env *envp);
 
 int is_built_in(char *cmd)
 {   
@@ -72,14 +73,16 @@ int built_echo(t_cmd *cmd)
     return (1);    
 }
 
-int built_env(char **envp)
+int built_env(t_env *envp)
 {
+    char **env;
     int i;
 
     i = 0;
-    while (envp[i])
+    env = env_to_array(envp);
+    while (env[i])
     {
-        printf("%s\n",envp[i]);
+        printf("%s\n",env[i]);
         i++;
     }
     return (1);
