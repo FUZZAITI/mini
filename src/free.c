@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+void free_tokens(t_token *tokens);
+void free_env(t_env *env);
+void free_cmd(t_cmd *cmd);
+void free_arraay(char **array);
+
 void free_tokens(t_token *tokens)
 {
 	 t_token *tmp;

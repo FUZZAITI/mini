@@ -5,6 +5,7 @@ void add_env_back(t_env **env, t_env *new);
 t_env *env_init(char **envp);
 int env_size(t_env *env);
 char **env_to_array(t_env *env);
+char *get_env_value(char *var_name, t_env *env_list);
 
 
 
@@ -103,4 +104,14 @@ int env_size(t_env *env)
     return (count);
 }
 
+char *get_env_value(char *var_name, t_env *env_list)
+{
+    while (env_list)
+    {
+        if (ft_strcmp(env_list->key, var_name) == 0)
+            return (env_list->value);
+        env_list = env_list->next;
+    }
+    return (NULL);
+}
 

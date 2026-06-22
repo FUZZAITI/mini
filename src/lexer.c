@@ -1,5 +1,14 @@
 #include "minishell.h"
 
+t_token *lexer(char *input); 
+int handle_word(t_token **tokens, char *str);
+int handle_infile(t_token **tokens, char *str);
+int handle_infile(t_token **tokens, char *str);
+int handle_outfile(t_token **tokens, char *str);
+int find_quote_end(char *str, char quote);
+
+
+
 t_token *lexer(char *input) 
 {
 	int i = 0;
@@ -16,8 +25,10 @@ t_token *lexer(char *input)
 			add_token(&tokens, "|", 1);
 			i++;
 		}
-		else if (input[i] == '>' || input[i] == '<')
-			i += handle_redirect(&tokens, &input[i]);
+		else if (input[i] == '>')
+			i += handle_infile(&tokens, &input[i]);
+		else if (input[i] == '<')
+			i += handle_outfile(&tokens, &input[i]);	
 		else
 			i += handle_word(&tokens, &input[i]);
 	}
@@ -45,7 +56,7 @@ int handle_word(t_token **tokens, char *str)
 	return (i);
 }
 
-int handle_redirect(t_token **tokens, char *str)
+int handle_infile(t_token **tokens, char *str)
 {
 	int i;
 	char *word;
@@ -57,16 +68,26 @@ int handle_redirect(t_token **tokens, char *str)
 		add_token(tokens, word, 2);
 		return (2);
 	}
-	else if (str[i] == '<' && str[i + 1] == '<')
-	{
-		word = strndup(str, (i + 2));
-		add_token(tokens, word, 3);
-		return (2);
-	}
 	else if (str[i] == '>')
 	{
 		word = strndup(str, (i + 1));
 		add_token(tokens, word, 4);
+	}
+	free(word);
+	return (i + 1);
+}
+
+int handle_outfile(t_token **tokens, char *str)
+{
+	int i;
+	char *word;
+
+	i = 0;
+	if (str[i] == '<' && str[i + 1] == '<')
+	{
+		word = strndup(str, (i + 2));
+		add_token(tokens, word, 3);
+		return (2);
 	}
 	else if (str[i] == '<')
 	{
@@ -74,7 +95,7 @@ int handle_redirect(t_token **tokens, char *str)
 		add_token(tokens, word, 5);
 	}
 	free(word);
-	return (i + 1);
+	return (i + 1);	
 }
 
 int find_quote_end(char *str, char quote)

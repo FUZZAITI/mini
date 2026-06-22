@@ -70,13 +70,18 @@ void execute_single_child(t_cmd *cmd, t_env *env)
         run_builtin(cmd, env);
         exit(g_exit_status);
     }
-    full_path = split_path(env);
-    path = get_cmd_path(cmd, full_path);
+    if (ft_strchr(cmd->argv[0], '/'))
+        path = ft_strdup(cmd->argv[0]);
+    else
+    {
+        full_path = split_path(env);
+        path = get_cmd_path(cmd, full_path);
+        free_array(full_path);
+    }
     if (!path)
     {
         ft_putstr_fd(cmd->argv[0], 2);
         ft_putstr_fd(": command not found\n", 2);
-        free_array(full_path);
         exit(127);
     }
     envp = env_to_array(env);

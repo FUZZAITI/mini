@@ -11,11 +11,20 @@ void execute_cmd(t_cmd *cmd, t_env *env)
     char **path;
     char *full_path;
 
+    if (ft_strchr(cmd->argv[0], '/'))
+    {
+        full_path = ft_strdup(cmd->argv[0]);
+        execve_cmd(cmd, env, full_path);
+    }
     path = split_path(env);
     if ((full_path = get_cmd_path(cmd,path)))
         execve_cmd(cmd, env, full_path);
-    free(path);
-       
+    else
+    {
+        ft_putstr_fd(cmd->argv[0], 2);
+        ft_putstr_fd(": command not found\n", 2);
+    }    
+    free(path); 
 }
 
 char **split_path(t_env *env)

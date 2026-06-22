@@ -63,7 +63,7 @@ void remove_quotes_tokens(t_token *lst)
 	{
 		if (lst->type == WORD)
 		{
-			tmp = remove_quote(lst->content);
+			tmp = remove_quotes(lst->content);
 			free(lst->content);
 			lst->content = tmp;
 		}
@@ -87,25 +87,28 @@ int len_quotes(char *line)
 	return (len);
 }
 
-char *remove_quote(char *token)
+char *remove_quotes(char *str)
 {
-	int i;
-	int len;
-	char *resul;
+    char    *result;
+    int     i;
+    int     state;
 
-	i = 0;
-	len = len_quotes(token);
-	resul = malloc(len + 1);
-	if (!resul)
-		return (NULL);
-	i = 0;
-	len = 0;
-	while (token[i])
-	{
-		if (token[i] != '\'' && token[i] != '\"')
-			resul[len++] = token[i];
-		i++;
-	}
-	resul[len] = '\0';
-	return (resul);
+    result = strdup("");
+    i = 0;
+    state = NORMAL;
+    while (str[i])
+    {
+        if (str[i] == '\'' && state == NORMAL)
+            state = S_QUOTE;
+        else if (str[i] == '\'' && state == S_QUOTE)
+            state = NORMAL;
+        else if (str[i] == '\"' && state == NORMAL)
+            state = D_QUOTE;
+        else if (str[i] == '\"' && state == D_QUOTE)
+            state = NORMAL;
+        else
+            result = add_char_to_str(result, str[i]);
+        i++;
+    }
+    return (result);
 }
