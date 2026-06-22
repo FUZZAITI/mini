@@ -99,6 +99,9 @@ void bulit_exit();
 int bulit_cd(char *cd);
 int built_echo(t_cmd *cmd);
 int built_env(t_env *envp);
+void built_export(t_cmd *cmd, t_env *env);
+void add_env_node_export(t_env *env, char *key, char *value);
+void update_env(t_env *node, char *value);
 
 
 int count_cmds(t_cmd *cmd);

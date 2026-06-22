@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Ilibft -Iincludes
+CFLAGS = -g -Ilibft -Iincludes
 
 all:
 	make -C libft

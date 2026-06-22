@@ -68,7 +68,9 @@ void run_builtin(t_cmd *cmd, t_env *env)
     else if (!ft_strcmp(comando,"env"))
         built_env(env);
     else if (!ft_strcmp(comando,"exit"))
-        bulit_exit();                   
+        bulit_exit();
+    else if (!ft_strcmp(comando,"export"))
+        built_export(cmd, env);                    
 }
 
 
