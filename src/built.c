@@ -140,3 +140,9 @@ int	update_export(t_env *env, char *key, char *value)
 	}
 	return (0);
 }
+
+void	update_env(t_env *node, char *value)
+{
+	free(node->value);
+	node->value = ft_strdup(value);
+}
