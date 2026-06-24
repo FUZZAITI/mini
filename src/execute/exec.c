@@ -79,16 +79,6 @@ int setup_redirections(t_cmd *cmd)
         close(fd);
     }
 
-    /*
-    if (cmd->heredoc)
-    {
-        fd = do_heredoc(cmd->delimiter);
-        if (fd < 0)
-            return (-1);
-        dup2(fd, STDIN_FILENO);
-        close(fd);
-    }
-    */
     if (cmd->outfile)
     {
         if (cmd->append)
