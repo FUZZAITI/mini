@@ -55,26 +55,6 @@ void execute_single(t_cmd *cmd, t_env *env)
         execute_cmd(cmd, env);
 }
 
-void run_builtin(t_cmd *cmd, t_env *env)
-{   
-    char *comando = cmd->argv[0];
-
-    if (!ft_strcmp(comando,"echo"))
-        built_echo(cmd);
-    else if (!ft_strcmp(comando,"cd"))
-        bulit_cd(cmd->argv[1]);
-    else if (!ft_strcmp(comando,"pwd"))
-        bulit_pwd();
-    else if (!ft_strcmp(comando,"env"))
-        built_env(env);
-    else if (!ft_strcmp(comando,"exit"))
-        bulit_exit();
-    else if (!ft_strcmp(comando,"export"))
-        built_export(cmd, env);                    
-}
-
-
-
 void restore_std_fds(int saved_stdin, int saved_stdout)
 {
     dup2(saved_stdin, STDIN_FILENO);
@@ -83,13 +63,10 @@ void restore_std_fds(int saved_stdin, int saved_stdout)
     close(saved_stdout);
 }
 
-
-
 int setup_redirections(t_cmd *cmd)
 {
     int fd;
 
-    // INFILE — 
     if (cmd->infile)
     {
         fd = open(cmd->infile, O_RDONLY);
@@ -102,7 +79,6 @@ int setup_redirections(t_cmd *cmd)
         close(fd);
     }
 
-    // HEREDOC — 
     /*
     if (cmd->heredoc)
     {
@@ -113,8 +89,6 @@ int setup_redirections(t_cmd *cmd)
         close(fd);
     }
     */
-
-    // OUTFILE — > ou >>
     if (cmd->outfile)
     {
         if (cmd->append)

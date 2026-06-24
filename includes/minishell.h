@@ -136,3 +136,4 @@ char *handle_expander(char *line, t_env *env_listn, int i, int state);
 char *get_var_value(char *line, int *i, t_env *env_list);
 char *add_char_to_str(char *dest, char carac);
 char *ft_strjoin_free(char *s1, char *s2);
+void	update_state(char c, int *state);
